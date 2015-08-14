@@ -1,5 +1,5 @@
 //
-//  WWMenuViewController.h
+//  WWDetailViewController.h
 //  WWMenuSlider
 //
 //  Created by Tidus on 15/8/14.
@@ -7,9 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WWMenuItemCell.h"
-#import "WWDetailViewController.h"
 
-@interface WWMenuViewController : UITableViewController
+@interface WWDetailViewController : UIViewController
 
 @end

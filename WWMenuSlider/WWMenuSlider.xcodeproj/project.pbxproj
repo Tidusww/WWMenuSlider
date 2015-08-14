@@ -15,6 +15,7 @@
 		35E464821B7DBF4400489819 /* WWMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E464811B7DBF4400489819 /* WWMenuViewController.m */; };
 		35E464841B7DC1FF00489819 /* MenuItems.plist in Resources */ = {isa = PBXBuildFile; fileRef = 35E464831B7DC1FF00489819 /* MenuItems.plist */; };
 		35E464881B7DC7F700489819 /* WWMenuItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E464871B7DC7F700489819 /* WWMenuItemCell.m */; };
+		35E4648B1B7DF2EA00489819 /* WWDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E4648A1B7DF2EA00489819 /* WWDetailViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +44,8 @@
 		35E464831B7DC1FF00489819 /* MenuItems.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MenuItems.plist; sourceTree = "<group>"; };
 		35E464861B7DC7F700489819 /* WWMenuItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWMenuItemCell.h; sourceTree = "<group>"; };
 		35E464871B7DC7F700489819 /* WWMenuItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWMenuItemCell.m; sourceTree = "<group>"; };
+		35E464891B7DF2EA00489819 /* WWDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWDetailViewController.h; sourceTree = "<group>"; };
+		35E4648A1B7DF2EA00489819 /* WWDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWDetailViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +130,8 @@
 			children = (
 				35E464801B7DBF4400489819 /* WWMenuViewController.h */,
 				35E464811B7DBF4400489819 /* WWMenuViewController.m */,
+				35E464891B7DF2EA00489819 /* WWDetailViewController.h */,
+				35E4648A1B7DF2EA00489819 /* WWDetailViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -240,6 +245,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35E4648B1B7DF2EA00489819 /* WWDetailViewController.m in Sources */,
 				35E4645D1B7DBAD000489819 /* AppDelegate.m in Sources */,
 				35E464881B7DC7F700489819 /* WWMenuItemCell.m in Sources */,
 				35E464821B7DBF4400489819 /* WWMenuViewController.m in Sources */,
@@ -421,6 +427,7 @@
 				35E464791B7DBAD000489819 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		35E4647A1B7DBAD000489819 /* Build configuration list for PBXNativeTarget "WWMenuSliderTests" */ = {
 			isa = XCConfigurationList;
@@ -429,6 +436,7 @@
 				35E4647C1B7DBAD000489819 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
