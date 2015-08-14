@@ -25,11 +25,14 @@
     self.menuItems = [[NSMutableArray alloc] initWithArray:items];
     
     //设置navigationBar的clipsToBounds属性，如果为YES，bar将不会覆盖状态栏
-    self.navigationController.navigationBar.clipsToBounds = YES;
+//    self.navigationController.navigationBar.clipsToBounds = YES;
     self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
     self.edgesForExtendedLayout = UIRectEdgeNone;
+    
     self.view.backgroundColor = [UIColor blackColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    [self setupSubviews];
     
 }
 
@@ -52,7 +55,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    WWDetailViewController *detailController = [[WWDetailViewController alloc] init];
+    WWDetailViewController *detailController = [[WWDetailViewController alloc] initWithDict:self.menuItems[indexPath.row]];
     [self.navigationController pushViewController:detailController animated:YES];
     
 }

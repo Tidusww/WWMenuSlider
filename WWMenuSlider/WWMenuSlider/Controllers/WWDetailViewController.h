@@ -10,4 +10,6 @@
 
 @interface WWDetailViewController : UIViewController
 
+- (instancetype)initWithDict:(NSDictionary *)dict;
+    
 @end
