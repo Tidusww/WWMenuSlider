@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "WWMenuItemCell.h"
-#import "WWDetailViewController.h"
-#import "WWContainerViewController.h"
+
+typedef void(^WWMenuItemCellDidSelectBlock)(UITableView* tableView, NSIndexPath *indexPath, NSDictionary *dict);
 
 @interface WWMenuViewController : UITableViewController
+
+@property (nonatomic, copy) WWMenuItemCellDidSelectBlock itemDidSelectBlock;
 
 @end

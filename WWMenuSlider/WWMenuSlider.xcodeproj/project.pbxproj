@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		350074091B809E2A00FBEFEA /* WWHamburgerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 350074081B809E2A00FBEFEA /* WWHamburgerView.m */; };
 		35E4645A1B7DBAD000489819 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E464591B7DBAD000489819 /* main.m */; };
 		35E4645D1B7DBAD000489819 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E4645C1B7DBAD000489819 /* AppDelegate.m */; };
 		35E464651B7DBAD000489819 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35E464641B7DBAD000489819 /* Images.xcassets */; };
@@ -30,6 +31,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		350074071B809E2A00FBEFEA /* WWHamburgerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWHamburgerView.h; sourceTree = "<group>"; };
+		350074081B809E2A00FBEFEA /* WWHamburgerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWHamburgerView.m; sourceTree = "<group>"; };
 		35E464541B7DBAD000489819 /* WWMenuSlider.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WWMenuSlider.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35E464581B7DBAD000489819 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		35E464591B7DBAD000489819 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -146,6 +149,8 @@
 			children = (
 				35E464861B7DC7F700489819 /* WWMenuItemCell.h */,
 				35E464871B7DC7F700489819 /* WWMenuItemCell.m */,
+				350074071B809E2A00FBEFEA /* WWHamburgerView.h */,
+				350074081B809E2A00FBEFEA /* WWHamburgerView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -253,6 +258,7 @@
 				35E4648B1B7DF2EA00489819 /* WWDetailViewController.m in Sources */,
 				35E4645D1B7DBAD000489819 /* AppDelegate.m in Sources */,
 				35F4BD831B7F79AD00B2D68E /* WWContainerViewController.m in Sources */,
+				350074091B809E2A00FBEFEA /* WWHamburgerView.m in Sources */,
 				35E464881B7DC7F700489819 /* WWMenuItemCell.m in Sources */,
 				35E464821B7DBF4400489819 /* WWMenuViewController.m in Sources */,
 				35E4645A1B7DBAD000489819 /* main.m in Sources */,

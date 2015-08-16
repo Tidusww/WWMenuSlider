@@ -20,6 +20,7 @@
     
     self.view.backgroundColor = [UIColor blackColor];
     self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.navigationController.navigationBar.clipsToBounds = YES;
     
     [self setupSubviews];
     [self setDetailInfo];
@@ -28,9 +29,8 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-//    NSLog(@"%@", NSStringFromCGRect(self.view.frame));
     
-    
+    [self setDetailInfo];
 }
 
 - (instancetype)initWithDict:(NSDictionary *)dict {
@@ -73,6 +73,13 @@
     
     [self.view addConstraints:constraint1];
     [self.view addConstraints:constraint2];
+    
+    
+    //
+    self.hamburgerView = [[WWHamburgerView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleHamburgerDidTap:)];
+    [self.hamburgerView addGestureRecognizer:tapGesture];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.hamburgerView];
 }
 
 - (void)setDetailInfo {
@@ -84,7 +91,15 @@
     
     self.backgroundImageView.image = [UIImage imageNamed:imageName];
     self.view.backgroundColor = [UIColor colorWithRed:[colorArray[0] floatValue]/255.0 green:[colorArray[1] floatValue]/255.0 blue:[colorArray[2] floatValue]/255.0 alpha:1];
+    
+    
+    NSLog(@"%@", NSStringFromCGRect(self.view.frame));
 }
 
+- (void)handleHamburgerDidTap:(UITapGestureRecognizer *)tapGesture {
+    if(self.hamburgerViewDidTapBlock){
+        self.hamburgerViewDidTapBlock(tapGesture);
+    }
+}
 
 @end

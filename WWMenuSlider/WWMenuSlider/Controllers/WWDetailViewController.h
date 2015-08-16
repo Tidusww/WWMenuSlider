@@ -7,8 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WWHamburgerView.h"
 
+
+typedef void(^hamburgerViewDidTapBlock)(UITapGestureRecognizer *tapGesture);
 @interface WWDetailViewController : UIViewController
+
+@property (nonatomic, copy) hamburgerViewDidTapBlock hamburgerViewDidTapBlock;
+@property (nonatomic, strong) WWHamburgerView *hamburgerView;
 
 - (instancetype)initWithDict:(NSDictionary *)dict;
 

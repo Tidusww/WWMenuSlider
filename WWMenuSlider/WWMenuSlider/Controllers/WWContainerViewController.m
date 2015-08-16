@@ -8,10 +8,13 @@
 
 #import "WWContainerViewController.h"
 
-#define wwScreenWith ([[UIScreen mainScreen] bounds].size.width)
+#define wwScreenWidth ([[UIScreen mainScreen] bounds].size.width)
+#define wwMenuWidth (@"80")
 
 @interface WWContainerViewController ()
 
+@property (nonatomic, assign) NSInteger curIndex;
+@property (nonatomic, assign) BOOL showingMenu;
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIView *contentView;
 @property (nonatomic, strong) WWMenuViewController *menuController;
@@ -33,6 +36,23 @@
     
     [self setupSubViews];
     
+    __weak typeof(self) wself = self;
+    self.menuController.itemDidSelectBlock = ^(UITableView *tableView, NSIndexPath *indexPath, NSDictionary *dict){
+        wself.curIndex = indexPath.row ;
+        wself.showingMenu = NO;
+        [wself setDetailControllerDict:dict];
+        [wself setMenuOpen:wself.showingMenu  animated:YES];
+    };
+    
+    self.detailController.hamburgerViewDidTapBlock = ^(UITapGestureRecognizer *tapGesture) {
+        
+        wself.showingMenu = !wself.showingMenu;
+        [wself setMenuOpen:wself.showingMenu animated:YES];
+    };
+    
+    
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,17 +60,32 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    
+    
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    NSLog(@"%@", NSStringFromCGRect(self.view.frame));
-    NSLog(@"%@", NSStringFromCGRect(self.scrollView.frame));
-    NSLog(@"%@", NSStringFromCGRect(self.contentView.frame));
-    NSLog(@"%@", NSStringFromCGSize(self.scrollView.contentSize));
+//    NSLog(@"%@", NSStringFromCGRect(self.view.frame));
+//    NSLog(@"%@", NSStringFromCGRect(self.scrollView.frame));
+//    NSLog(@"%@", NSStringFromCGRect(self.contentView.frame));
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    self.menuController.view.layer.anchorPoint = CGPointMake(1, 0.5);
+    
+    
+    [self setMenuOpen:self.showingMenu animated:NO];
+    
     
 }
 
 - (void)setupSubViews {
-    NSLog(@"%@", NSStringFromCGRect(self.view.frame));
     //1、ScrollView
     self.scrollView = [[UIScrollView alloc] init];
     self.scrollView.showsHorizontalScrollIndicator = NO;
@@ -85,9 +120,8 @@
     self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.scrollView addSubview:self.contentView];
     //AutoLayout
-    NSString *tableViewWidth = @"80";
     views = @{@"contentView":self.contentView, @"scrollView":self.scrollView};
-    metrics = @{@"paddingRight":tableViewWidth, @"contentViewWidth":@(wwScreenWith+[tableViewWidth floatValue])};
+    metrics = @{@"paddingRight":wwMenuWidth, @"contentViewWidth":@(wwScreenWidth+[wwMenuWidth floatValue])};
     constraint1 = [NSLayoutConstraint
                             constraintsWithVisualFormat:@"H:|-0-[contentView(==contentViewWidth)]-0-|"
                             options:NSLayoutFormatDirectionLeadingToTrailing
@@ -106,11 +140,12 @@
     self.menuController.tableView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:self.menuController.tableView];
     [self addChildViewController:self.menuController];
+    [self.menuController didMoveToParentViewController:self];
     //AutoLayout
     [self.contentView addConstraints:[NSLayoutConstraint
                                       constraintsWithVisualFormat:@"H:|-0-[tableView(==tableViewWidth)]"
                                       options:NSLayoutFormatDirectionLeadingToTrailing
-                                      metrics:@{@"tableViewWidth":tableViewWidth}
+                                      metrics:@{@"tableViewWidth":wwMenuWidth}
                                       views:@{@"tableView":self.menuController.tableView}]];
     [self.contentView addConstraints:[NSLayoutConstraint
                                       constraintsWithVisualFormat:@"V:|-0-[tableView]-0-|"
@@ -119,22 +154,97 @@
                                       views:@{@"tableView":self.menuController.tableView, @"contentView":self.contentView}]];
     
     
-    //4、DetailController
+    
+    //4、DetailNavigationController
     self.detailController = [[WWDetailViewController alloc] init];
-    self.detailController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.contentView addSubview:self.detailController.view];
-    [self addChildViewController:self.detailController];
+    UINavigationController *detailNavController = [[UINavigationController alloc] initWithRootViewController:self.detailController];
+    detailNavController.navigationBar.translucent = NO;
+    detailNavController.navigationBar.barTintColor = [UIColor blackColor];
+    detailNavController.view.translatesAutoresizingMaskIntoConstraints = NO;
+    
+//    [self.contentView addSubview:self.detailController.view];
+    [self.contentView addSubview:detailNavController.view];
+    [self addChildViewController:detailNavController];
+    [detailNavController didMoveToParentViewController:self];
     //AutoLayout
     [self.contentView addConstraints:[NSLayoutConstraint
-                                      constraintsWithVisualFormat:@"H:[tableView]-0-[detailView]-0-|"
+                                      constraintsWithVisualFormat:@"H:[tableView]-0-[navigationView]-0-|"
                                       options:NSLayoutFormatDirectionLeadingToTrailing
                                       metrics:@{}
-                                      views:@{@"tableView":self.menuController.tableView, @"detailView":self.detailController.view}]];
+                                      views:@{@"tableView":self.menuController.tableView,
+                                              @"navigationView":detailNavController.view,
+                                              @"detailView":self.detailController.view}]];
     [self.contentView addConstraints:[NSLayoutConstraint
-                                      constraintsWithVisualFormat:@"V:|-0-[detailView]-0-|"
+                                      constraintsWithVisualFormat:@"V:|-0-[navigationView]-0-|"
                                       options:NSLayoutFormatDirectionLeadingToTrailing
                                       metrics:@{}
-                                      views:@{@"tableView":self.menuController.tableView, @"detailView":self.detailController.view}]];
+                                      views:@{@"tableView":self.menuController.tableView,
+                                              @"navigationView":detailNavController.view,
+                                              @"detailView":self.detailController.view}]];
+    
+    //5、DetailController
+    self.detailController.view.frame = detailNavController.view.bounds;
+//    self.detailController.view.translatesAutoresizingMaskIntoConstraints = NO;
+    [detailNavController.view addSubview:self.detailController.view];
+    [detailNavController addChildViewController:self.detailController];
+    
+    
+//    //AutoLayout
+//    [detailNavController.view addConstraints:[NSLayoutConstraint
+//                                      constraintsWithVisualFormat:@"H:|-0-[detailView(==375)]-0-|"
+//                                      options:NSLayoutFormatDirectionLeadingToTrailing
+//                                      metrics:@{}
+//                                      views:@{@"detailView":self.detailController.view}]];
+//    [detailNavController.view addConstraints:[NSLayoutConstraint
+//                                      constraintsWithVisualFormat:@"V:|-0-[navigationBar]-0-[detailView]-0-|"
+//                                      options:NSLayoutFormatDirectionLeadingToTrailing
+//                                      metrics:@{}
+//                                      views:@{@"navigationBar":detailNavController.navigationBar,
+//                                              @"detailView":self.detailController.view}]];
+}
+
+#pragma mark - Event
+- (void)setDetailControllerDict:(NSDictionary *)dict {
+    
+    [self.detailController setInfoDict:dict];
+    
+}
+
+- (void)setMenuOpen:(BOOL)isOpen animated:(BOOL) animate {
+    [self.scrollView setContentOffset:(isOpen ? CGPointZero : CGPointMake([wwMenuWidth floatValue], 0)) animated:animate];
+}
+
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    //避免点击detailView会导致菜单弹出
+    scrollView.pagingEnabled = scrollView.contentOffset.x < (scrollView.contentSize.width - CGRectGetWidth(scrollView.frame));
+    
+    //实时更新showingMenu
+    if(scrollView.contentOffset.x == 0){
+        self.showingMenu = YES;
+    }else{
+        self.showingMenu = NO;
+    }
+    
+    [self transformMenuViewWithX:scrollView.contentOffset.x];
+    
+}
+
+#pragma mark - 动画 根据offset.x设置 menu的旋转
+- (void)transformMenuViewWithX:(CGFloat)x {
+    CGFloat angle = 90 * (x/[wwMenuWidth floatValue]) * M_PI/180;
+    
+    CATransform3D perspective = CATransform3DIdentity;
+    perspective.m34 = -0.001;
+    self.menuController.view.layer.transform = perspective;
+    
+    [self.menuController.view.layer setValue:@([wwMenuWidth floatValue] * 0.5) forKeyPath:@"transform.translation.x"];
+    [self.menuController.view.layer setValue:@(-angle) forKeyPath:@"transform.rotation.y"];
+    
+    self.menuController.view.alpha = 1 - x/[wwMenuWidth floatValue];
+    
+    [self.detailController.hamburgerView rotateHamburgerView: 1 - x/[wwMenuWidth floatValue]];
+    
     
     
 }
