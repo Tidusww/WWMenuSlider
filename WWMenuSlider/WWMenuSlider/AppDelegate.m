@@ -20,8 +20,8 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    WWMenuViewController *menuViewController = [[WWMenuViewController alloc] init];
-    UINavigationController *navigate = [[UINavigationController alloc] initWithRootViewController:menuViewController];
+    WWContainerViewController *menuContainerViewController = [[WWContainerViewController alloc] init];
+    UINavigationController *navigate = [[UINavigationController alloc] initWithRootViewController:menuContainerViewController];
     
     self.window.rootViewController = navigate;
     [self.window makeKeyAndVisible];

@@ -22,6 +22,14 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     [self setupSubviews];
+    [self setDetailInfo];
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+//    NSLog(@"%@", NSStringFromCGRect(self.view.frame));
+    
     
 }
 
@@ -32,33 +40,34 @@
     return self;
 }
 
+- (void)setInfoDict:(NSDictionary *)dict {
+    self.dict = dict;
+    [self setDetailInfo];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 - (void)setupSubviews {
-    NSString *imageName = [self.dict objectForKey:@"bigImage"];
-    NSArray *colorArray = [self.dict objectForKey:@"colors"];
     
     self.backgroundImageView = [[UIImageView alloc] init];
     self.backgroundImageView.contentMode = UIViewContentModeScaleAspectFit;
-    self.backgroundImageView.image = [UIImage imageNamed:imageName];
     self.backgroundImageView.translatesAutoresizingMaskIntoConstraints = NO;
     
     [self.view addSubview:self.backgroundImageView];
-    self.view.backgroundColor = [UIColor colorWithRed:[colorArray[0] floatValue]/255.0 green:[colorArray[1] floatValue]/255.0 blue:[colorArray[2] floatValue]/255.0 alpha:1];
     
     
     //AutoLayout
     NSDictionary *views = @{@"view":self.view, @"imageView":self.backgroundImageView};
     NSDictionary *metrics = @{};
     NSArray *constraint1 = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[imageView]-0-|"
-                                                                   options:0
+                                                                   options:NSLayoutFormatDirectionLeadingToTrailing
                                                                    metrics:metrics
                                                                      views:views];
     NSArray *constraint2 = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[imageView]-0-|"
-                                                                   options:0
+                                                                   options:NSLayoutFormatDirectionLeadingToTrailing
                                                                    metrics:metrics
                                                                      views:views];
     
@@ -66,14 +75,16 @@
     [self.view addConstraints:constraint2];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)setDetailInfo {
+    if(self.dict == nil){
+        return;
+    }
+    NSString *imageName = [self.dict objectForKey:@"bigImage"];
+    NSArray *colorArray = [self.dict objectForKey:@"colors"];
+    
+    self.backgroundImageView.image = [UIImage imageNamed:imageName];
+    self.view.backgroundColor = [UIColor colorWithRed:[colorArray[0] floatValue]/255.0 green:[colorArray[1] floatValue]/255.0 blue:[colorArray[2] floatValue]/255.0 alpha:1];
 }
-*/
+
 
 @end

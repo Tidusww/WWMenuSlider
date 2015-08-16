@@ -11,5 +11,7 @@
 @interface WWDetailViewController : UIViewController
 
 - (instancetype)initWithDict:(NSDictionary *)dict;
+
+- (void)setInfoDict:(NSDictionary *)dict;
     
 @end

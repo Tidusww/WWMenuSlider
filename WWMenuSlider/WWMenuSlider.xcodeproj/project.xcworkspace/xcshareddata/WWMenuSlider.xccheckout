@@ -10,27 +10,27 @@
 	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>dca67649-4e28-028c-8f20-ce57b7db7bff</key>
+		<key>15ee6628-4f65-a506-848a-ce57b7db7bff</key>
 		<string>https://github.com/Tidusww/WWMenuSlider.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>WWMenuSlider/WWMenuSlider.xcodeproj/project.xcworkspace</string>
+	<string>trunk/WWMenuSlider/WWMenuSlider.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>dca67649-4e28-028c-8f20-ce57b7db7bff</key>
-		<string>../../..</string>
+		<key>15ee6628-4f65-a506-848a-ce57b7db7bff</key>
+		<string>../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>dca67649-4e28-028c-8f20-ce57b7db7bff</string>
+	<string>15ee6628-4f65-a506-848a-ce57b7db7bff</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.subversion</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>dca67649-4e28-028c-8f20-ce57b7db7bff</string>
+			<string>15ee6628-4f65-a506-848a-ce57b7db7bff</string>
 			<key>IDESourceControlWCCName</key>
 			<string>WWMenuSlider.git</string>
 		</dict>

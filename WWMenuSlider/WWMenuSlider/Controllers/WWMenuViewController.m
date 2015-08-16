@@ -24,15 +24,18 @@
     NSArray *items = [[NSArray alloc] initWithContentsOfFile:path];
     self.menuItems = [[NSMutableArray alloc] initWithArray:items];
     
-    //设置navigationBar的clipsToBounds属性，如果为YES，bar将不会覆盖状态栏
-//    self.navigationController.navigationBar.clipsToBounds = YES;
-    self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    
     self.view.backgroundColor = [UIColor blackColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [self setupSubviews];
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+//    NSLog(@"%@", NSStringFromCGRect(self.tableView.frame));
+    
     
 }
 

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "WWMenuItemCell.h"
 #import "WWDetailViewController.h"
+#import "WWContainerViewController.h"
 
 @interface WWMenuViewController : UITableViewController
 
