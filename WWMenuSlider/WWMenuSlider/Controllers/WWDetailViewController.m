@@ -93,7 +93,7 @@
     self.view.backgroundColor = [UIColor colorWithRed:[colorArray[0] floatValue]/255.0 green:[colorArray[1] floatValue]/255.0 blue:[colorArray[2] floatValue]/255.0 alpha:1];
     
     
-    NSLog(@"%@", NSStringFromCGRect(self.view.frame));
+//    NSLog(@"%@", NSStringFromCGRect(self.view.frame));
 }
 
 - (void)handleHamburgerDidTap:(UITapGestureRecognizer *)tapGesture {

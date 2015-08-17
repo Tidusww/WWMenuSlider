@@ -9,7 +9,7 @@
 #import "WWContainerViewController.h"
 
 #define wwScreenWidth ([[UIScreen mainScreen] bounds].size.width)
-#define wwMenuWidth (@"80")
+#define wwMenuWidth (80.0)
 
 @interface WWContainerViewController ()
 
@@ -76,11 +76,16 @@
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    
     self.menuController.view.layer.anchorPoint = CGPointMake(1, 0.5);
     
-    
     [self setMenuOpen:self.showingMenu animated:NO];
+    
+//    NSLog(@"%f", wwScreenWidth);
+//    CGRect frame = self.contentView.frame;
+//    frame.size.width = wwScreenWidth + 80;
+//    self.contentView.frame = frame;
+//    NSLog(@"%@", NSStringFromCGRect(self.contentView.frame ));
+    
     
     
 }
@@ -109,6 +114,7 @@
                             options:NSLayoutFormatDirectionLeadingToTrailing
                             metrics:metrics
                             views:views];
+    
     [self.view addConstraints:constraint1];
     [self.view addConstraints:constraint2];
     
@@ -121,9 +127,9 @@
     [self.scrollView addSubview:self.contentView];
     //AutoLayout
     views = @{@"contentView":self.contentView, @"scrollView":self.scrollView};
-    metrics = @{@"paddingRight":wwMenuWidth, @"contentViewWidth":@(wwScreenWidth+[wwMenuWidth floatValue])};
+    metrics = @{@"paddingRight":@(wwMenuWidth), @"contentViewWidth":@(wwScreenWidth+wwMenuWidth)};
     constraint1 = [NSLayoutConstraint
-                            constraintsWithVisualFormat:@"H:|-0-[contentView(==contentViewWidth)]-0-|"
+                            constraintsWithVisualFormat:@"H:|-0-[contentView]-0-|"
                             options:NSLayoutFormatDirectionLeadingToTrailing
                             metrics:metrics
                             views:views];
@@ -132,8 +138,20 @@
                             options:NSLayoutFormatDirectionLeadingToTrailing
                             metrics:metrics
                             views:views];
+    
+    //contentView的宽度需要设置为scrollView的宽度+80，单独拆开来写
+    NSLayoutConstraint *constraint = [NSLayoutConstraint
+                                      constraintWithItem:self.contentView
+                                      attribute:NSLayoutAttributeWidth
+                                      relatedBy:NSLayoutRelationEqual
+                                      toItem:self.scrollView
+                                      attribute:NSLayoutAttributeWidth
+                                      multiplier:1.0
+                                      constant:80];
+    
     [self.scrollView addConstraints:constraint1];
     [self.scrollView addConstraints:constraint2];
+    [self.scrollView addConstraint:constraint];
     
     //3、MenuController
 //    self.menuController = [[WWMenuViewController alloc] init];
@@ -171,7 +189,7 @@
     [self.contentView addConstraints:[NSLayoutConstraint
                                       constraintsWithVisualFormat:@"H:|-0-[tableView(==tableViewWidth)]"
                                       options:NSLayoutFormatDirectionLeadingToTrailing
-                                      metrics:@{@"tableViewWidth":wwMenuWidth}
+                                      metrics:@{@"tableViewWidth":@(wwMenuWidth)}
                                       views:@{@"tableView":menuNavController.view}]];
     [self.contentView addConstraints:[NSLayoutConstraint
                                       constraintsWithVisualFormat:@"V:|-0-[tableView]-0-|"
@@ -233,7 +251,7 @@
 }
 
 - (void)setMenuOpen:(BOOL)isOpen animated:(BOOL) animate {
-    [self.scrollView setContentOffset:(isOpen ? CGPointZero : CGPointMake([wwMenuWidth floatValue], 0)) animated:animate];
+    [self.scrollView setContentOffset:(isOpen ? CGPointZero : CGPointMake(wwMenuWidth, 0)) animated:animate];
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -254,7 +272,7 @@
 
 #pragma mark - 动画 根据offset.x设置 menu的旋转
 - (void)transformMenuViewWithX:(CGFloat)x {
-    CGFloat angle = 90 * (x/[wwMenuWidth floatValue]) * M_PI/180;
+    CGFloat angle = 90 * (x/wwMenuWidth) * M_PI/180;
     
     CATransform3D perspective = CATransform3DIdentity;
     perspective.m34 = -0.001;
@@ -264,9 +282,9 @@
     
     [self.menuController.view.layer setValue:@(-angle) forKeyPath:@"transform.rotation.y"];
     
-    self.menuController.view.alpha = 1 - x/[wwMenuWidth floatValue];
+    self.menuController.view.alpha = 1 - x/wwMenuWidth;
     
-    [self.detailController.hamburgerView rotateHamburgerView: 1 - x/[wwMenuWidth floatValue]];
+    [self.detailController.hamburgerView rotateHamburgerView: 1 - x/wwMenuWidth];
     
     
     
