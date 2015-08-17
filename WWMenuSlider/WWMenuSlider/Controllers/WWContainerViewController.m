@@ -136,23 +136,48 @@
     [self.scrollView addConstraints:constraint2];
     
     //3、MenuController
+//    self.menuController = [[WWMenuViewController alloc] init];
+//    self.menuController.tableView.translatesAutoresizingMaskIntoConstraints = NO;
+//    [self.contentView addSubview:self.menuController.tableView];
+//    [self addChildViewController:self.menuController];
+//    [self.menuController didMoveToParentViewController:self];
+//    //AutoLayout
+//    [self.contentView addConstraints:[NSLayoutConstraint
+//                                      constraintsWithVisualFormat:@"H:|-0-[tableView(==tableViewWidth)]"
+//                                      options:NSLayoutFormatDirectionLeadingToTrailing
+//                                      metrics:@{@"tableViewWidth":wwMenuWidth}
+//                                      views:@{@"tableView":self.menuController.tableView}]];
+//    [self.contentView addConstraints:[NSLayoutConstraint
+//                                      constraintsWithVisualFormat:@"V:|-0-[tableView]-0-|"
+//                                      options:NSLayoutFormatDirectionLeadingToTrailing
+//                                      metrics:@{}
+//                                      views:@{@"tableView":self.menuController.tableView}]];
+    
+    //带NavigationController
+    //初始化RootViewController
     self.menuController = [[WWMenuViewController alloc] init];
-    self.menuController.tableView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.contentView addSubview:self.menuController.tableView];
-    [self addChildViewController:self.menuController];
-    [self.menuController didMoveToParentViewController:self];
-    //AutoLayout
+    //设置RootViewController
+    UINavigationController *menuNavController = [[UINavigationController alloc] initWithRootViewController:self.menuController];
+    //设置导航栏样式
+    menuNavController.navigationBar.translucent = NO;
+    menuNavController.navigationBar.barTintColor = [UIColor blackColor];
+    //使用AutoLayout
+    menuNavController.view.translatesAutoresizingMaskIntoConstraints = NO;
+    //添加到parentController
+    [self.contentView addSubview:menuNavController.view];
+    [self addChildViewController:menuNavController];
+    [menuNavController didMoveToParentViewController:self];
+    //添加AutoLayout样式
     [self.contentView addConstraints:[NSLayoutConstraint
                                       constraintsWithVisualFormat:@"H:|-0-[tableView(==tableViewWidth)]"
                                       options:NSLayoutFormatDirectionLeadingToTrailing
                                       metrics:@{@"tableViewWidth":wwMenuWidth}
-                                      views:@{@"tableView":self.menuController.tableView}]];
+                                      views:@{@"tableView":menuNavController.view}]];
     [self.contentView addConstraints:[NSLayoutConstraint
                                       constraintsWithVisualFormat:@"V:|-0-[tableView]-0-|"
                                       options:NSLayoutFormatDirectionLeadingToTrailing
                                       metrics:@{}
-                                      views:@{@"tableView":self.menuController.tableView, @"contentView":self.contentView}]];
-    
+                                      views:@{@"tableView":menuNavController.view}]];
     
     
     //4、DetailNavigationController
@@ -171,22 +196,19 @@
                                       constraintsWithVisualFormat:@"H:[tableView]-0-[navigationView]-0-|"
                                       options:NSLayoutFormatDirectionLeadingToTrailing
                                       metrics:@{}
-                                      views:@{@"tableView":self.menuController.tableView,
-                                              @"navigationView":detailNavController.view,
-                                              @"detailView":self.detailController.view}]];
+                                      views:@{@"tableView":menuNavController.view,
+                                              @"navigationView":detailNavController.view}]];
     [self.contentView addConstraints:[NSLayoutConstraint
                                       constraintsWithVisualFormat:@"V:|-0-[navigationView]-0-|"
                                       options:NSLayoutFormatDirectionLeadingToTrailing
                                       metrics:@{}
-                                      views:@{@"tableView":self.menuController.tableView,
-                                              @"navigationView":detailNavController.view,
-                                              @"detailView":self.detailController.view}]];
+                                      views:@{@"navigationView":detailNavController.view}]];
     
     //5、DetailController
-    self.detailController.view.frame = detailNavController.view.bounds;
+//    self.detailController.view.frame = detailNavController.view.bounds;
 //    self.detailController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [detailNavController.view addSubview:self.detailController.view];
-    [detailNavController addChildViewController:self.detailController];
+//    [detailNavController.view addSubview:self.detailController.view];
+//    [detailNavController addChildViewController:self.detailController];
     
     
 //    //AutoLayout
@@ -238,7 +260,8 @@
     perspective.m34 = -0.001;
     self.menuController.view.layer.transform = perspective;
     
-    [self.menuController.view.layer setValue:@([wwMenuWidth floatValue] * 0.5) forKeyPath:@"transform.translation.x"];
+//    [self.menuController.view.layer setValue:@([wwMenuWidth floatValue] * 0.5) forKeyPath:@"transform.translation.x"];
+    
     [self.menuController.view.layer setValue:@(-angle) forKeyPath:@"transform.rotation.y"];
     
     self.menuController.view.alpha = 1 - x/[wwMenuWidth floatValue];
