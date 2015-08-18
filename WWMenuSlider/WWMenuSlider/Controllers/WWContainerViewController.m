@@ -27,14 +27,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor blackColor];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     //设置navigationBar的clipsToBounds属性，如果为YES，bar将不会覆盖状态栏
     self.navigationController.navigationBar.clipsToBounds = YES;
     self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
     
-    [self setupSubViews];
     
     __weak typeof(self) wself = self;
     self.menuController.itemDidSelectBlock = ^(UITableView *tableView, NSIndexPath *indexPath, NSDictionary *dict){
@@ -55,6 +53,12 @@
     
 }
 
+- (void)loadView {
+    [super loadView];
+    [self setupSubViews];
+    
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -62,8 +66,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    
     
 }
 
@@ -91,6 +93,7 @@
 }
 
 - (void)setupSubViews {
+    self.view.backgroundColor = [UIColor blackColor];
     //1、ScrollView
     self.scrollView = [[UIScrollView alloc] init];
     self.scrollView.showsHorizontalScrollIndicator = NO;
@@ -153,24 +156,6 @@
     [self.scrollView addConstraints:constraint2];
     [self.scrollView addConstraint:constraint];
     
-    //3、MenuController
-//    self.menuController = [[WWMenuViewController alloc] init];
-//    self.menuController.tableView.translatesAutoresizingMaskIntoConstraints = NO;
-//    [self.contentView addSubview:self.menuController.tableView];
-//    [self addChildViewController:self.menuController];
-//    [self.menuController didMoveToParentViewController:self];
-//    //AutoLayout
-//    [self.contentView addConstraints:[NSLayoutConstraint
-//                                      constraintsWithVisualFormat:@"H:|-0-[tableView(==tableViewWidth)]"
-//                                      options:NSLayoutFormatDirectionLeadingToTrailing
-//                                      metrics:@{@"tableViewWidth":wwMenuWidth}
-//                                      views:@{@"tableView":self.menuController.tableView}]];
-//    [self.contentView addConstraints:[NSLayoutConstraint
-//                                      constraintsWithVisualFormat:@"V:|-0-[tableView]-0-|"
-//                                      options:NSLayoutFormatDirectionLeadingToTrailing
-//                                      metrics:@{}
-//                                      views:@{@"tableView":self.menuController.tableView}]];
-    
     //带NavigationController
     //初始化RootViewController
     self.menuController = [[WWMenuViewController alloc] init];
@@ -222,25 +207,6 @@
                                       metrics:@{}
                                       views:@{@"navigationView":detailNavController.view}]];
     
-    //5、DetailController
-//    self.detailController.view.frame = detailNavController.view.bounds;
-//    self.detailController.view.translatesAutoresizingMaskIntoConstraints = NO;
-//    [detailNavController.view addSubview:self.detailController.view];
-//    [detailNavController addChildViewController:self.detailController];
-    
-    
-//    //AutoLayout
-//    [detailNavController.view addConstraints:[NSLayoutConstraint
-//                                      constraintsWithVisualFormat:@"H:|-0-[detailView(==375)]-0-|"
-//                                      options:NSLayoutFormatDirectionLeadingToTrailing
-//                                      metrics:@{}
-//                                      views:@{@"detailView":self.detailController.view}]];
-//    [detailNavController.view addConstraints:[NSLayoutConstraint
-//                                      constraintsWithVisualFormat:@"V:|-0-[navigationBar]-0-[detailView]-0-|"
-//                                      options:NSLayoutFormatDirectionLeadingToTrailing
-//                                      metrics:@{}
-//                                      views:@{@"navigationBar":detailNavController.navigationBar,
-//                                              @"detailView":self.detailController.view}]];
 }
 
 #pragma mark - Event
@@ -279,9 +245,7 @@
     self.menuController.view.layer.transform = perspective;
     
 //    [self.menuController.view.layer setValue:@([wwMenuWidth floatValue] * 0.5) forKeyPath:@"transform.translation.x"];
-    
     [self.menuController.view.layer setValue:@(-angle) forKeyPath:@"transform.rotation.y"];
-    
     self.menuController.view.alpha = 1 - x/wwMenuWidth;
     
     [self.detailController.hamburgerView rotateHamburgerView: 1 - x/wwMenuWidth];

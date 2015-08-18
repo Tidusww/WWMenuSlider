@@ -28,6 +28,7 @@
     return self;
 }
 
+
 - (void)setupSubviews {
     self.iconImageView = [[UIImageView alloc] init];
     self.iconImageView.contentMode = UIViewContentModeScaleAspectFit;

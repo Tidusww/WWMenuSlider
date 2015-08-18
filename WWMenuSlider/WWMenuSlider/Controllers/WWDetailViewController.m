@@ -22,8 +22,13 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.navigationController.navigationBar.clipsToBounds = YES;
     
-    [self setupSubviews];
     [self setDetailInfo];
+    
+}
+
+- (void)loadView {
+    [super loadView];
+    [self setupSubViews];
     
 }
 
@@ -50,7 +55,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)setupSubviews {
+- (void)setupSubViews {
     
     self.backgroundImageView = [[UIImageView alloc] init];
     self.backgroundImageView.contentMode = UIViewContentModeScaleAspectFit;

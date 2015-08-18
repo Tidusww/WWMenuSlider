@@ -34,7 +34,11 @@
     self.tableView.showsHorizontalScrollIndicator = NO;
     self.tableView.showsVerticalScrollIndicator = NO;
     
-    [self setupSubviews];
+}
+
+- (void)loadView {
+    [super loadView];
+    [self setupSubViews];
     
 }
 
@@ -53,7 +57,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)setupSubviews {
+- (void)setupSubViews {
     
     
 }
@@ -68,7 +72,7 @@
 //}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    return MAX(80 , ((CGRectGetHeight(self.view.bounds)-64) / (CGFloat)self.menuItems.count));
+    return MAX(80 , ((CGRectGetHeight(self.view.bounds)-64) / (CGFloat)self.menuItems.count));
     return 80;
 }
 
