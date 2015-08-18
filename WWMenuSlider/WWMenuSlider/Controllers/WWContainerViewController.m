@@ -167,8 +167,8 @@
     //使用AutoLayout
     menuNavController.view.translatesAutoresizingMaskIntoConstraints = NO;
     //添加到parentController
-    [self.contentView addSubview:menuNavController.view];
     [self addChildViewController:menuNavController];
+    [self.contentView addSubview:menuNavController.view];
     [menuNavController didMoveToParentViewController:self];
     //添加AutoLayout样式
     [self.contentView addConstraints:[NSLayoutConstraint
@@ -190,9 +190,9 @@
     detailNavController.navigationBar.barTintColor = [UIColor blackColor];
     detailNavController.view.translatesAutoresizingMaskIntoConstraints = NO;
     
-//    [self.contentView addSubview:self.detailController.view];
-    [self.contentView addSubview:detailNavController.view];
+    //    [self.contentView addSubview:self.detailController.view];
     [self addChildViewController:detailNavController];
+    [self.contentView addSubview:detailNavController.view];
     [detailNavController didMoveToParentViewController:self];
     //AutoLayout
     [self.contentView addConstraints:[NSLayoutConstraint
@@ -249,7 +249,6 @@
     self.menuController.view.alpha = 1 - x/wwMenuWidth;
     
     [self.detailController.hamburgerView rotateHamburgerView: 1 - x/wwMenuWidth];
-    
     
     
 }
